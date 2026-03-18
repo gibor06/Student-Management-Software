@@ -171,6 +171,10 @@
             <Setter Property="ColumnHeaderHeight" Value="44"/>
             <Setter Property="SelectionMode" Value="Single"/>
             <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#E5EDF9"/>
+            <Setter Property="VerticalGridLinesBrush" Value="#E5EDF9"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         </Style>
 
         <Style TargetType="DataGridColumnHeader">
@@ -180,12 +184,15 @@
             <Setter Property="Padding" Value="12,0"/>
             <Setter Property="BorderBrush" Value="#D9E4F4"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
         <Style TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="10,0"/>
             <Setter Property="Foreground" Value="#13233E"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
         <Style TargetType="DataGridRow">
@@ -197,8 +204,28 @@
                 </Trigger>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#DCEAFE"/>
+                    <Setter Property="Foreground" Value="#102746"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DataTextLeft" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="DataTextCenter" TargetType="TextBlock" BasedOn="{StaticResource DataTextLeft}">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="DataTextName" TargetType="TextBlock" BasedOn="{StaticResource DataTextLeft}">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style x:Key="HeaderCenterStyle" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
 
@@ -371,10 +398,28 @@
                                     <DataGrid ItemsSource="{Binding StudentsView}"
                                               SelectedItem="{Binding SelectedStudent}">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header="Họ và tên" Width="2.2*" Binding="{Binding HoTen}"/>
-                                            <DataGridTextColumn Header="Tuổi" Width="*" Binding="{Binding Tuoi}"/>
-                                            <DataGridTextColumn Header="Giới tính" Width="*" Binding="{Binding GioiTinhText}"/>
-                                            <DataGridTextColumn Header="Thành phố" Width="1.5*" Binding="{Binding ThanhPho}"/>
+                                            <DataGridTextColumn Header="Họ và tên"
+                                                                Width="2.1*"
+                                                                MinWidth="220"
+                                                                Binding="{Binding HoTen}"
+                                                                ElementStyle="{StaticResource DataTextName}"/>
+                                            <DataGridTextColumn Header="Tuổi"
+                                                                Width="0.8*"
+                                                                MinWidth="70"
+                                                                Binding="{Binding Tuoi}"
+                                                                HeaderStyle="{StaticResource HeaderCenterStyle}"
+                                                                ElementStyle="{StaticResource DataTextCenter}"/>
+                                            <DataGridTextColumn Header="Giới tính"
+                                                                Width="1.1*"
+                                                                MinWidth="110"
+                                                                Binding="{Binding GioiTinhText}"
+                                                                HeaderStyle="{StaticResource HeaderCenterStyle}"
+                                                                ElementStyle="{StaticResource DataTextCenter}"/>
+                                            <DataGridTextColumn Header="Thành phố"
+                                                                Width="1.6*"
+                                                                MinWidth="150"
+                                                                Binding="{Binding ThanhPho}"
+                                                                ElementStyle="{StaticResource DataTextLeft}"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Border>
